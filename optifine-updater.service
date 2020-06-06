@@ -1,0 +1,11 @@
+[Unit]
+Description=OptifineUpdater
+After=syslog.target network.target
+
+[Service]
+Type=idle
+ExecStart=python /home/prokop/Documents/optifine-updater/optifineUpdater.py
+WorkingDirectory=/tmp/
+
+[Install]
+WantedBy=multi-user.target

@@ -47,7 +47,9 @@ def update(ofv):
     print(f"Downloading OptiFine HD U {ofv}")
     downloadProgress(getFilelink(mcVersion, ofv), "optifine")
     print("Running OptiFine installer")
-    ofo = subprocess.check_output(["java", "-cp", "optifine", "optifine.Installer"])
+    ofo = str(
+        subprocess.check_output(["java", "-cp", "optifine", "optifine.Installer"])
+    )
     if "Cannot find Minecraft" in ofo:
         print(
             f"Cannot find Minecraft {mcVersion}. You must download and start Minecraft {mcVersion} once in the official launcher."
