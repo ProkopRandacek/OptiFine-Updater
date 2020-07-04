@@ -4,9 +4,9 @@
 
 ### Linux / Mac:
 
-`git clone https://github.com/prokoprandacek/optifine-updater`
-`cd optifine-updater`
-`python optifineUpdater.py`
+`git clone https://github.com/prokoprandacek/optifine-updater`  
+`cd optifine-updater`  
+`python optifineUpdater.py`  
 
 ### Windows:
 
