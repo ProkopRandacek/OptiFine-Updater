@@ -47,15 +47,19 @@ def update(ofv):
     print(f"Downloading OptiFine HD U {ofv}")
     downloadProgress(getFilelink(mcVersion, ofv), "optifine")
     print("Running OptiFine installer")
-    ofo = str(
-        subprocess.check_output(["java", "-cp", "optifine", "optifine.Installer"])
-    )
-    if "Cannot find Minecraft" in ofo:
-        print(
-            f"Cannot find Minecraft {mcVersion}. You must download and start Minecraft {mcVersion} once in the official launcher."
+    if oflog:
+        subprocess.run(["java", "-cp", "optifine", "optifine.Installer"])
+    else:
+        ofo = str(
+            subprocess.check_output(["java", "-cp", "optifine", "optifine.Installer"])
         )
-        exit(1)
+        if "Cannot find Minecraft" in ofo:
+            print(
+                f"Cannot find Minecraft {mcVersion}. You must download and start Minecraft {mcVersion} once in the official launcher."
+            )
+            exit(1)
     print("OptiFine updated")
+    os.remove("optifine")
 
 
 def getLatestMcV():
@@ -92,6 +96,21 @@ def getInstalledOfV():
 
 
 preview = True
+oflog = False
+
+if "help" in sys.argv:
+    print(
+        """Usage:
+help  - print this menu
+nopre - dont use preview versions of OptiFine
+oflog - print OptiFine installator log"""
+    )
+    exit(0)
+if "nopre" in sys.argv:
+    preview = False
+if "oflog" in sys.argv:
+    oflog = True
+
 
 mcVersion = getLatestMcV()
 ofVersion = getInstalledOfV()
@@ -110,9 +129,8 @@ while pos1 != -1:
     v = v.split(" ")
     if not (v[0] in latestVersions.keys()):
         latestVersions[v[0]] = " ".join(v[1:])
-
 if mcVersion in latestVersions:
     if latestVersions[mcVersion] > ofVersion:
         update(latestVersions[mcVersion])
         exit()
-print("Already using latest OptiFine version")
+print(f"Already using latest OptiFine version ({ofVersion} for {mcVersion})")
