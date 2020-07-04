@@ -1,4 +1,4 @@
-import http.client, subprocess
+import http.client, subprocess, os, platform, sys
 from pathlib import Path
 
 
@@ -65,11 +65,28 @@ def getLatestMcV():
     return versionPage[pos1:pos2]
 
 
-# TODO win support?
+def getMcFolder():
+    path = None
+    if platform.system() == "Linux":
+        if os.path.isdir(str(Path.home()) + "/.minecraft/"):
+            path = str(Path.home()) + "/.minecraft/launcher_profiles.json"
+        else:
+            raise FileNotFoundError(str(Path.home()) + "/.minecraft/ folder not found!")
+    elif platform.system() == "Windows":
+        if os.path.isdir(str(os.getenv("APPDATA")) + "/.minecraft/"):
+            path = str(os.getenv("APPDATA")) + "/.minecraft/launcher_profiles.json"
+        else:
+            raise FileNotFoundError(
+                str(os.getenv("APPDATA")) + "/.minecraft/ folder not found!"
+            )
+    return path
+
+
 def getInstalledOfV():
-    prof = open(str(Path.home()) + "/.minecraft/launcher_profiles.json").read()
-    prof = prof[prof.find('"OptiFine": {') :]
-    prof = prof[prof.find('"lastVersionId": "') + 18 :]
+    path = getMcFolder()
+    prof = open(path).read().replace(" ", "")
+    prof = prof[prof.find('"OptiFine":{') :]
+    prof = prof[prof.find('"lastVersionId":"') + 18 :]
     ofv = prof[prof.find("HD_U_") + 5 : prof.find('"')].replace("_", " ")
     return ofv
 
