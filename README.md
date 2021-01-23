@@ -1,6 +1,6 @@
 # Optifine updater
 
-See end of optifineAPI.py for example usage.
+See `example.py` for example usage.
 
 ## TODO:
 - Automatically update installed optifine
