@@ -77,7 +77,7 @@ def getOFFileLink(mcv, ofv):
         "optifine.net",
         f"/adloadx?f={'preview_' if 'pre' in ofv else ''}OptiFine_{mcvString}_HD_U_{ofv.replace(' ', '_')}.jar",  # The page with the download button
     )
-    dpage = cutAllBefore("downloadx?f=", dpage)
+    dpage = "downloadx?f=" + cutAllBefore("downloadx?f=", dpage)
     dpage = cutAllAfter("'", dpage)
     filelink = "/" + dpage
     return filelink
