@@ -89,7 +89,7 @@ def getChangelog(mcv, ofv):
     changelog = str(
         downloadPage(
             "optifine.net",
-            f"/changelog?f={'preview_' if 'pre' in ofv else ''}OptiFine_{mcvString}_HD_U_{ofv.replace(' ', '_')}.jar",  # The page with the download button
+            f"/changelog?f={'preview_' if 'pre' in ofv else ''}OptiFine_{mcvString}_HD_U_{ofv.replace(' ', '_')}.jar",
         )
     )[2:]
     changelog = cutAllAfter("\n\n", changelog)
