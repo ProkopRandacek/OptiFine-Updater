@@ -15,3 +15,6 @@ print(of.getChangelog(MCV, OFV))
 
 print("\nInfo about all available OptiFine version for Minecraft version 1.16.3")
 formatData(of.getOFVs4MCV((1, 16, 3)), 0)  # returns a dict
+
+print("\nAll Minecraft versions that have OptiFine available for them:")
+print(of.getAvailableVersions())

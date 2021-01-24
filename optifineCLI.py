@@ -41,7 +41,6 @@ def handleAvailableVersions(args: Namespace) -> None:
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--noprev", help="ignore the previews", action="store_true")
-parser.add_argument("-v", "--verbose", help="verbose output", action="store_true")
 parser.add_argument("-d", "--domain", help="Set different optifine domain")
 
 subparsers = parser.add_subparsers(help="subparser help", dest="operationName")
@@ -81,7 +80,6 @@ parserAV = subparsers.add_parser(
 
 args = parser.parse_args()
 
-of.verbose = args.verbose
 of.noprev = not args.noprev
 if args.domain != None:
     of.domain = args.domain
