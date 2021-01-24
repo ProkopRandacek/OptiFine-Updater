@@ -28,7 +28,7 @@ def handleChangelog(args: Namespace) -> None:
 
 
 def handleOFFileLink(args: Namespace) -> None:
-    print(of.getOFWeb() + of.getOFFileLink(tuple(args.mcv.split(".")), args.ofv))
+    print(of.ofweb + of.getOFFileLink(tuple(args.mcv.split(".")), args.ofv))
 
 
 def handleOFVs(args: Namespace) -> None:
@@ -36,14 +36,15 @@ def handleOFVs(args: Namespace) -> None:
 
 
 def handleAvailableVersions(args: Namespace) -> None:
-    print("\n".join(of.getAvailableVersions()))
+    for v in of.getAvailableVersions():
+        print(".".join(map(str, v)))  # (1, 16, 5) > "1.16.5"
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--noprev", help="ignore the previews", action="store_true")
 parser.add_argument("-d", "--domain", help="Set different optifine domain")
 
-subparsers = parser.add_subparsers(help="subparser help", dest="operationName")
+subparsers = parser.add_subparsers(dest="operationName")
 
 parserLastMC = subparsers.add_parser("lastmc", help="Outputs the last MC version.")
 
