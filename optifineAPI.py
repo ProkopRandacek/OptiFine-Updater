@@ -37,7 +37,7 @@ def getAvailableVersions():
         raise Exception("Version list is empty")
     v = re.findall(r"Minecraft 1\.\d+\.\d+", page)
     for i in range(len(v)):  # Remove "Minecraft " and convert to tuple
-        v[i].append(tuple(map(int, v[i][10:].split("."))))
+        v[i] = tuple(map(int, v[i][10:].split(".")))
     return v
 
 
