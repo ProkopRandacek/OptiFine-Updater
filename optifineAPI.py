@@ -12,40 +12,6 @@ def vp(text):
         print(text)
 
 
-def setPrev(p):
-    global pre
-    vp(f'setting Previews to "{p}"')
-    pre = p
-
-
-def setOFWeb(w):
-    global ofweb
-    vp(f'setting OF Web to "{w}"')
-    ofweb = w
-
-
-def getOFWeb():
-    global ofweb
-    return ofweb
-
-
-def setVerbose(v):
-    global verbose
-    verbose = v
-
-
-# https://stackoverflow.com/questions/47131263/python-3-6-print-dictionary-data-in-readable-tree-structure
-def formatData(t, s):
-    """ Pretty dict print """
-    if not isinstance(t, dict) and not isinstance(t, list):
-        print("  " * s + str(t))
-    else:
-        for key in t:
-            print("  " * s + str(key))
-            if not isinstance(t, list):
-                formatData(t[key], s + 1)
-
-
 def downloadPage(domain, page):
     vp(f"downloading {domain}{page}")
     conn = http.client.HTTPSConnection(domain, 443)
@@ -185,4 +151,6 @@ def getLatestOFV():
 
 def init():
     """ Call this before using the API """
+    vp("initiaization")
     downloadVersionList()
+    vp("initalized")

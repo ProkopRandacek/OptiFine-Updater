@@ -1,45 +1,42 @@
 #!/usr/bin/python
-from optifineAPI import (
-    getLatestMCV,
-    getLatestOFV,
-    getChangelog,
-    getOFFileLink,
-    getOFVs4MCV,
-    getAvailableVersions,
-    setPrev,
-    setVerbose,
-    setOFWeb,
-    getOFWeb,
-    formatData,
-    init,
-)
-
+import optifineAPI as of
 import argparse
 from argparse import Namespace
 
+# https://stackoverflow.com/questions/47131263/python-3-6-print-dictionary-data-in-readable-tree-structure
+def formatData(t, s):
+    """ Pretty dict print """
+    if not isinstance(t, dict) and not isinstance(t, list):
+        print("  " * s + str(t))
+    else:
+        for key in t:
+            print("  " * s + str(key))
+            if not isinstance(t, list):
+                formatData(t[key], s + 1)
+
 
 def handleLastMC(args: Namespace) -> None:
-    print(".".join(map(str, getLatestMCV())))
+    print(".".join(map(str, of.getLatestMCV())))
 
 
 def handleLastOF(args: Namespace) -> None:
-    print(getLatestOFV())
+    print(of.getLatestOFV())
 
 
 def handleChangelog(args: Namespace) -> None:
-    print(getChangelog(tuple(args.mcv.split(".")), args.ofv))
+    print(of.getChangelog(tuple(args.mcv.split(".")), args.ofv))
 
 
 def handleOFFileLink(args: Namespace) -> None:
-    print(getOFWeb() + getOFFileLink(tuple(args.mcv.split(".")), args.ofv))
+    print(of.getOFWeb() + of.getOFFileLink(tuple(args.mcv.split(".")), args.ofv))
 
 
 def handleOFVs(args: Namespace) -> None:
-    formatData(getOFVs4MCV(tuple(args.mcv.split("."))), 0)
+    formatData(of.getOFVs4MCV(tuple(args.mcv.split("."))), 0)
 
 
 def handleAvailableVersions(args: Namespace) -> None:
-    print("\n".join(getAvailableVersions()))
+    print("\n".join(of.getAvailableVersions()))
 
 
 parser = argparse.ArgumentParser()
@@ -84,10 +81,10 @@ parserAV = subparsers.add_parser(
 
 args = parser.parse_args()
 
-setVerbose(args.verbose)
-setPrev(not args.noprev)
+of.verbose = args.verbose
+of.noprev = not args.noprev
 if args.domain != None:
-    setOFWeb(args.domain)
+    of.domain = args.domain
 
 operations: dict = {
     "lastmc": handleLastMC,
@@ -98,8 +95,9 @@ operations: dict = {
     "availvers": handleAvailableVersions,
 }
 
-if args.operationName == None:
-    parser.print_help()
-else:
-    init()
-    operations[args.operationName](args)
+if __name__ == "__main__":
+    if args.operationName == None:
+        parser.print_help()
+    else:
+        of.init()
+        operations[args.operationName](args)
